@@ -1,0 +1,32 @@
+name: CI / QA Suite
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Playwright and Dependencies
+        run: |
+          pip install playwright pytest
+          playwright install --with-deps chromium
+
+      - name: Start Local Server
+        run: |
+          python -m http.server 3333 &
+          sleep 2
+
+      - name: Run E2E Test Suite (Anti-Vibecoding)
+        run: python test_suite.py
