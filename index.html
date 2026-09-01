@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torcida® — Redesign Conceitual & Experiência Digital | Mateus Emanuel</title>
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Releitura de design e experiência digital conceitual para a Torcida® (PepsiCo). Case study independente focado em tipografia cinética e UI interativa por Mateus Emanuel.">
+    <meta name="keywords" content="Torcida, PepsiCo, redesign conceitual, creative developer, UI design, front-end, Mateus Emanuel, GSAP, Tailwind CSS, case de estudo">
+    <meta name="author" content="Mateus Emanuel Luiz Nogueira">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://torcida.mateusdev.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://torcida.mateusdev.com/">
+    <meta property="og:title" content="Torcida® — Redesign Conceitual | Mateus Emanuel">
+    <meta property="og:description" content="Experiência digital e redesign brutalista conceitual do salgadinho mais amado do Brasil. Desenvolvido por Mateus Emanuel Luiz Nogueira.">
+    <meta property="og:image" content="https://torcida.mateusdev.com/og-preview.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Torcida Concept Redesign">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://torcida.mateusdev.com/">
+    <meta name="twitter:title" content="Torcida® — Redesign Conceitual | Mateus Emanuel">
+    <meta name="twitter:description" content="Experiência digital e redesign brutalista conceitual da Torcida®. Desenvolvido por Mateus Emanuel Luiz Nogueira.">
+    <meta name="twitter:image" content="https://torcida.mateusdev.com/og-preview.png">
+    
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://torcida.mateusdev.com/#website",
+          "url": "https://torcida.mateusdev.com/",
+          "name": "Torcida® Concept Redesign",
+          "description": "Releitura conceitual de design e experiência web do snack Torcida®.",
+          "inLanguage": "pt-BR"
+        },
+        {
+          "@type": "CreativeWork",
+          "@id": "https://torcida.mateusdev.com/#casestudy",
+          "name": "Torcida® Digital Experience Redesign",
+          "headline": "Releitura de Design e Experiência Digital da Torcida®",
+          "author": {
+            "@type": "Person",
+            "name": "Mateus Emanuel Luiz Nogueira",
+            "url": "https://instagram.com/mateusemanuelluiznogueira",
+            "jobTitle": "Creative Developer"
+          },
+          "about": "Design conceitual, tipografia cinética e experiência web interativa.",
+          "keywords": "Design System, UI/UX, Creative Development, GSAP, Tailwind CSS",
+          "isAccessibleForFree": true
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Config & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-yellow': '#FDE02F',
+                        'brand-blue': '#1A237E',
+                        'brand-red': '#E53935',
+                        'brand-green': '#43A047',
+                        'brand-purple': '#5E35B1',
+                        'brand-dark': '#0d1245',
+                        'flavor-bacon': '#FFFFFF',
+                        'flavor-costelinha': '#5D4037',
+                        'flavor-alho': '#795548',
+                        'flavor-camarao': '#D32F2F',
+                        'flavor-vinagrete': '#C2185B',
+                        'flavor-queijo': '#F57C00',
+                    },
+                    fontFamily: {
+                        'display': ['Anton', 'sans-serif'],
+                        'body': ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: theme('colors.brand-dark');
+            color: white;
+            overflow-x: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* SVG Noise Filter Texture */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+        }
+
+        /* Cortes Angulares */
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+        }
+        
+        .clip-diagonal-reverse {
+            clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .clip-button {
+            clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .clip-button:hover {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transform: scale(1.05) skewX(-2deg);
+        }
+
+        /* Microinteração de Card Expandido */
+        .flavor-card {
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: visible;
+        }
+        .flavor-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
+            z-index: 40;
+        }
+        .flavor-card .inner-shape {
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .flavor-card:hover .inner-shape {
+            transform: scaleY(2) translateY(10px);
+            opacity: 0.1;
+        }
+
+        /* Pack Image Floating Animation */
+        .pack-img {
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+        }
+        .flavor-card:hover .pack-img {
+            transform: translateY(-40px) scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 25px 35px rgba(0,0,0,0.6));
+        }
+
+        .kinetic-wrap {
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .marquee-container {
+            width: 110%;
+            margin-left: -5%;
+            overflow: hidden;
+            white-space: nowrap;
+            background: #FDE02F;
+            color: #1A237E;
+            padding: 0.85rem 0;
+            position: relative;
+            z-index: 30;
+            margin-top: -1.5rem;
+            transform: rotate(-2deg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        @media (min-width: 768px) {
+            .marquee-container {
+                margin-top: -2.5rem;
+                padding: 1.1rem 0;
+            }
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.75rem;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .marquee-content {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-red selection:text-white">
+
+    <div class="noise-overlay"></div>
+
+    <!-- 1. HERO: Apresentação & Kinetic Typography -->
+    <header class="relative min-h-screen bg-brand-yellow text-brand-blue clip-diagonal flex items-center z-20 overflow-hidden" id="hero">
+        <div class="absolute top-6 sm:top-8 left-6 md:left-12 z-40 flex items-center gap-3 sm:gap-4">
+            <!-- Logo Original Torcida -->
+            <img src="https://www.br.joypepsico.com/prod/s3fs-public/styles/webp/public/2025-05/tarcida%20logo.png.webp" alt="Torcida Logo Oficial" class="h-12 sm:h-16 md:h-24 drop-shadow-lg transform -rotate-2 hover:scale-105 transition-transform duration-300">
+            <!-- Badge de Case Conceitual -->
+            <span class="hidden sm:inline-block bg-brand-dark/80 backdrop-blur-sm text-brand-yellow font-display text-[11px] sm:text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-brand-yellow/30 shadow-md">
+                Case de Estudo Conceitual • Não Oficial
+            </span>
+        </div>
+
+        <!-- 1. CAMADA Z-0: Linhas SVG Animadas Sutis -->
+        <div class="absolute right-0 bottom-4 lg:bottom-10 w-full sm:w-2/3 lg:w-1/2 h-72 pointer-events-none opacity-25 z-0" id="hero-lines">
+            <svg viewBox="0 0 400 200" preserveAspectRatio="none" class="w-full h-full">
+                <path d="M0,150 Q200,100 400,150" stroke="#1A237E" stroke-width="8" fill="none" class="anim-line"/>
+                <path d="M50,180 Q250,130 450,180" stroke="#E53935" stroke-width="8" fill="none" class="anim-line" style="animation-delay: 0.2s;"/>
+                <path d="M-50,120 Q150,70 350,120" stroke="#1A237E" stroke-width="4" fill="none" class="anim-line" style="animation-delay: 0.4s;"/>
+            </svg>
+        </div>
+
+        <!-- 2. CAMADA Z-0 / Z-10 / Z-20: Trio de Salgadinhos com Hierarquia de Evidência e Opacidade Unificada -->
+        <!-- Pack 1: Pimenta Mexicana (2ª Evidência - Esquerda no Desktop / Topo no Mobile) -->
+        <div class="hero-mobile-pack absolute -right-6 lg:right-[25%] top-[4%] sm:top-[6%] lg:top-[50%] lg:-translate-y-1/2 w-[46%] sm:w-[36%] lg:w-[25%] z-0 lg:z-10 pointer-events-none -rotate-12 lg:-rotate-6 opacity-0">
+            <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_PIMENTA.webp" alt="Torcida Pimenta" class="w-full h-auto object-contain floating-element drop-shadow-2xl opacity-95 lg:opacity-100 transition-opacity" style="animation-delay: -2s; filter: drop-shadow(0 25px 40px rgba(0,0,0,0.35));">
+        </div>
+
+        <!-- Pack 2: Cebola (3ª Evidência - Direita no Desktop / Meio no Mobile) -->
+        <div class="hero-mobile-pack absolute -right-8 lg:-right-[4%] top-[30%] sm:top-[28%] lg:top-[54%] lg:-translate-y-1/2 w-[48%] sm:w-[38%] lg:w-[23%] z-10 lg:z-0 pointer-events-none rotate-[10deg] lg:rotate-6 opacity-0">
+            <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CEBOLA.webp" alt="Torcida Cebola" class="w-full h-auto object-contain floating-element drop-shadow-2xl opacity-95 lg:opacity-100 transition-opacity" style="animation-delay: -4s; filter: drop-shadow(0 25px 40px rgba(0,0,0,0.35));">
+        </div>
+
+        <!-- Pack 3: Churrasco (1ª Evidência / O Grande Destaque - Centro Frente no Desktop / Frente no Mobile) -->
+        <div class="hero-pack-el absolute -right-4 sm:right-0 lg:right-[8%] bottom-6 sm:bottom-8 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 w-[60%] sm:w-[48%] lg:w-[33%] block opacity-0 translate-x-12 lg:translate-x-32 z-20 pointer-events-none rotate-12 lg:rotate-0" id="hero-pack">
+            <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CHURRASCO.webp" alt="Embalagem Torcida Sabor Churrasco" class="w-full h-auto object-contain floating-element drop-shadow-2xl opacity-95 lg:opacity-100 transition-opacity" style="filter: drop-shadow(0 25px 45px rgba(0,0,0,0.4));">
+        </div>
+
+        <!-- 3. CAMADA Z-30: Foco Total no Conteúdo (H1, H2, CTA) Preenchendo a Tela com Harmonia -->
+        <div class="container mx-auto px-5 sm:px-6 lg:px-12 relative z-30">
+            <div class="max-w-[65%] sm:max-w-md lg:max-w-5xl pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-0">
+                <!-- Único H1 Semântico com Contraste WCAG AAA e Isolamento Ótico -->
+                <h1 class="font-display uppercase flex flex-col space-y-1 sm:space-y-2" aria-label="O Salgadinho da Galera Tá de cara nova.">
+                    <span class="kinetic-wrap"><span class="hero-title block text-[11vw] sm:text-[9.5vw] md:text-[7vw] leading-[0.9] translate-y-[110%] tracking-tight text-brand-blue drop-shadow-sm">O Salgadinho</span></span>
+                    <span class="kinetic-wrap"><span class="hero-title block text-[11vw] sm:text-[9.5vw] md:text-[7vw] leading-[0.9] translate-y-[110%] text-[#D32F2F] tracking-tight drop-shadow-sm">da Galera</span></span>
+                    <span class="kinetic-wrap"><span class="hero-title block text-[11vw] sm:text-[9.5vw] md:text-[7vw] leading-[0.9] translate-y-[110%] tracking-tight text-brand-blue drop-shadow-sm">Tá de cara nova.</span></span>
+                </h1>
+                
+                <p class="hero-sub font-body font-bold text-[13.5px] sm:text-base md:text-2xl mt-4 sm:mt-6 max-w-[255px] sm:max-w-md lg:max-w-2xl opacity-0 text-brand-dark leading-snug tracking-tight">
+                    A medida perfeita para quem busca intensidade, seja no estádio, em casa ou no rolê.
+                </p>
+                
+                <div class="mt-6 sm:mt-8 hero-sub opacity-0 relative z-30">
+                    <a href="#showcase-top" class="inline-block bg-brand-blue text-brand-yellow font-display text-sm sm:text-2xl md:text-3xl py-3.5 px-8 sm:py-4 sm:px-12 clip-button tracking-wide group hover:bg-brand-red hover:text-white transition-colors duration-300 shadow-2xl focus:outline-none focus:ring-4 focus:ring-brand-blue/50" aria-label="Navegar até a seção com todos os sabores de Torcida">
+                        VER TODOS OS SABORES
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee Transition -->
+    <div class="marquee-container" id="marquee">
+        <div class="marquee-content" id="marquee-text">
+            O SALGADINHO DA GALERA • EXPLOSÃO DE SABOR • 100% ASSADO • O SALGADINHO DA GALERA • EXPLOSÃO DE SABOR • 100% ASSADO • O SALGADINHO DA GALERA • EXPLOSÃO DE SABOR • 100% ASSADO
+        </div>
+    </div>
+
+    <!-- 2. PRODUTOS: Os Clássicos (Top 3) -->
+    <section class="relative bg-brand-dark pt-16 md:pt-24 pb-24 md:pb-32 z-10" id="showcase-top">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-24 md:mb-40 overflow-hidden">
+                <h2 class="text-5xl md:text-8xl font-display text-white showcase-title translate-y-[100%]">OS <span class="text-brand-yellow">CLÁSSICOS</span></h2>
+                <p class="font-body text-gray-400 mt-4 sm:mt-6 max-w-2xl mx-auto showcase-title translate-y-[100%] text-base sm:text-lg md:text-xl leading-snug sm:leading-relaxed">Os sabores mais amados do Brasil.<br>Presença confirmada em qualquer rolê.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-28 md:gap-y-40 gap-x-8 lg:gap-x-12 relative pt-8 md:pt-12">
+                <!-- Parallax Background Element -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[80%] bg-brand-blue opacity-20 clip-diagonal skew-y-3 parallax-bg pointer-events-none z-0"></div>
+
+                <!-- 1: Pimenta Mexicana -->
+                <div class="flavor-card relative h-[500px] md:h-[550px] flex flex-col justify-end group mt-12 md:mt-0">
+                    <!-- Fundo com Clip-Path isolado (z-0) -->
+                    <div class="absolute inset-0 bg-brand-red clip-diagonal shadow-2xl z-0 transition-transform duration-700 group-hover:-translate-y-4"></div>
+
+                    <!-- Embalagem livre (z-20) -->
+                    <div class="absolute -top-20 md:-top-24 left-1/2 -translate-x-1/2 w-[70%] sm:w-[75%] md:w-[80%] z-20 pack-wrapper transition-all duration-700 ease-out group-hover:-translate-y-12">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_PIMENTA.webp" alt="Pimenta Mexicana" class="w-full h-auto object-contain pack-img drop-shadow-2xl">
+                    </div>
+                    
+                    <!-- Textos na cor pura da paleta (z-30) -->
+                    <div class="relative z-30 pt-32 md:pt-36 mt-auto p-6 sm:p-8 md:p-10 pointer-events-none">
+                        <span class="inline-block bg-brand-yellow text-brand-dark font-display text-sm tracking-wider px-3 py-1 clip-diagonal mb-2 shadow-md">INTENSO</span>
+                        <h3 class="text-4xl md:text-5xl font-display uppercase mt-1 mb-2 leading-none text-white drop-shadow-md">Pimenta<br>Mexicana</h3>
+                        <p class="font-body font-medium text-sm md:text-base text-white/90 leading-snug drop-shadow-sm">O calor vibrante em cada mordida.<br class="hidden sm:block"> Para quem busca intensidade.</p>
+                    </div>
+                </div>
+
+                <!-- 2: Churrasco -->
+                <div class="flavor-card relative h-[500px] md:h-[550px] flex flex-col justify-end group mt-12 md:mt-16">
+                    <div class="absolute inset-0 bg-brand-purple clip-diagonal shadow-2xl z-0 transition-transform duration-700 group-hover:-translate-y-4"></div>
+
+                    <div class="absolute -top-20 md:-top-24 left-1/2 -translate-x-1/2 w-[70%] sm:w-[75%] md:w-[80%] z-20 pack-wrapper transition-all duration-700 ease-out group-hover:-translate-y-12">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CHURRASCO.webp" alt="Churrasco" class="w-full h-auto object-contain pack-img drop-shadow-2xl">
+                    </div>
+                    
+                    <div class="relative z-30 pt-32 md:pt-36 mt-auto p-6 sm:p-8 md:p-10 pointer-events-none">
+                        <span class="inline-block bg-brand-yellow text-brand-dark font-display text-sm tracking-wider px-3 py-1 clip-diagonal mb-2 shadow-md">O FAVORITO</span>
+                        <h3 class="text-4xl md:text-5xl font-display uppercase mt-1 mb-2 leading-none text-white drop-shadow-md">Churrasco<br>Raiz</h3>
+                        <p class="font-body font-medium text-sm md:text-base text-white/90 leading-snug drop-shadow-sm">A essência do domingo em crocância.<br class="hidden sm:block"> O parceiro oficial de todo rolê.</p>
+                    </div>
+                </div>
+
+                <!-- 3: Cebola -->
+                <div class="flavor-card relative h-[500px] md:h-[550px] flex flex-col justify-end group mt-12 md:mt-32">
+                    <div class="absolute inset-0 bg-brand-green clip-diagonal shadow-2xl z-0 transition-transform duration-700 group-hover:-translate-y-4"></div>
+
+                    <div class="absolute -top-20 md:-top-24 left-1/2 -translate-x-1/2 w-[70%] sm:w-[75%] md:w-[80%] z-20 pack-wrapper transition-all duration-700 ease-out group-hover:-translate-y-12">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CEBOLA.webp" alt="Cebola" class="w-full h-auto object-contain pack-img drop-shadow-2xl">
+                    </div>
+                    
+                    <div class="relative z-30 pt-32 md:pt-36 mt-auto p-6 sm:p-8 md:p-10 pointer-events-none">
+                        <span class="inline-block bg-brand-yellow text-brand-dark font-display text-sm tracking-wider px-3 py-1 clip-diagonal mb-2 shadow-md">CLÁSSICO</span>
+                        <h3 class="text-4xl md:text-5xl font-display uppercase mt-1 mb-2 leading-none text-white drop-shadow-md">Cebola<br>Marcante</h3>
+                        <p class="font-body font-medium text-sm md:text-base text-white/90 leading-snug drop-shadow-sm">Sabor marcante e inconfundível.<br class="hidden sm:block"> Impossível comer um só.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2B. PRODUTOS: O Resto da Linha (Grid Compacto) -->
+    <section class="relative bg-brand-dark pb-24 md:pb-32 z-10" id="showcase-others">
+        <div class="container mx-auto px-6 lg:px-12 border-t border-gray-800 pt-16 md:pt-24">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 overflow-hidden">
+                <h2 class="text-4xl md:text-6xl font-display text-white uppercase other-title translate-y-[100%] leading-tight">Mais Sabores<br><span class="text-brand-red">Pra Sua Galera</span></h2>
+                <p class="font-body text-gray-400 max-w-sm other-title translate-y-[100%] mt-4 md:mt-0 text-sm md:text-base">Descubra a linha completa e encontre a sua intensidade favorita.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 gap-y-12 sm:gap-y-16">
+                <!-- 4: Bacon -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-bacon rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_BACON.webp" alt="Torcida Bacon" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:rotate-3">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-2 px-2.5 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-sm sm:text-base uppercase text-brand-yellow tracking-wider block leading-none">Bacon</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 5: Queijo -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-queijo rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_QUEIJO.webp" alt="Torcida Queijo" onerror="this.src='https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CHURRASCO.webp'" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:-rotate-3">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-2 px-2.5 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-sm sm:text-base uppercase text-brand-yellow tracking-wider block leading-none">Queijo</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 6: Camarão com Pimenta -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-camarao rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_CAMARAO.webp" alt="Torcida Camarão com Pimenta" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:rotate-6">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-1.5 sm:py-2 px-2 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-xs sm:text-sm uppercase text-brand-yellow tracking-wider block leading-tight">Camarão <span class="text-[10px] sm:text-xs text-white block font-body font-semibold">com Pimenta</span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 7: Costelinha com Limão -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-costelinha rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_COSTELINHA.webp" alt="Torcida Costelinha com Limão" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:-rotate-3">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-1.5 sm:py-2 px-2 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-xs sm:text-sm uppercase text-brand-yellow tracking-wider block leading-tight">Costelinha <span class="text-[10px] sm:text-xs text-white block font-body font-semibold">com Limão</span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 8: Pão de Alho -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-alho rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_PAO_DE_ALHO.webp" alt="Torcida Pão de Alho" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:rotate-3">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-2 px-2.5 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-sm sm:text-base uppercase text-brand-yellow tracking-wider block leading-none">Pão de Alho</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 9: Vinagrete -->
+                <div class="other-card group cursor-pointer opacity-0 translate-y-8">
+                    <div class="relative bg-flavor-vinagrete rounded-xl p-3 sm:p-4 aspect-[4/5] flex items-end justify-center transition-transform duration-500 group-hover:-translate-y-4 shadow-lg group-hover:shadow-2xl">
+                        <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_VINAGRETE.webp" alt="Torcida Vinagrete" class="absolute -top-10 sm:-top-12 w-[85%] sm:w-[90%] drop-shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-4 group-hover:-rotate-6">
+                        <div class="w-full bg-brand-dark/95 backdrop-blur-sm py-2 px-2.5 rounded-lg text-center relative z-20 shadow-md border border-white/10 group-hover:bg-brand-red transition-colors duration-300">
+                            <span class="font-display text-sm sm:text-base uppercase text-brand-yellow tracking-wider block leading-none">Vinagrete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. HISTÓRIA / MANIFESTO -->
+    <section class="relative bg-brand-blue clip-diagonal-reverse py-20 md:py-48 z-20" id="historia">
+        <div class="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            <!-- Story Visual (Animated Mask) -->
+            <div class="w-full md:w-1/2">
+                <div class="aspect-square bg-brand-yellow clip-diagonal relative overflow-hidden group story-visual opacity-0 scale-90 shadow-2xl">
+                    <img src="https://www.br.joypepsico.com/prod/s3fs-public/2026-05/TORCIDA_BACON.webp" alt="Torcida Bacon" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-auto opacity-30 object-contain rotate-12 group-hover:scale-110 transition-transform duration-1000 z-0 mix-blend-multiply">
+                    <div class="absolute inset-0 bg-brand-red origin-bottom scale-y-0 transition-transform duration-700 ease-out group-hover:scale-y-100 z-10 mix-blend-color">
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center z-20 p-8 sm:p-12">
+                        <h2 class="text-5xl sm:text-6xl md:text-8xl font-display text-brand-blue uppercase leading-none mix-blend-hard-light group-hover:text-white transition-colors duration-500 text-center">
+                            Uma<br>Tradição<br>
+                            <span class="text-brand-dark group-hover:text-brand-yellow">Brasileira</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Story Text -->
+            <div class="w-full md:w-1/2">
+                <div class="overflow-hidden mb-6 md:mb-8">
+                    <h2 class="text-4xl sm:text-5xl md:text-7xl font-display uppercase leading-[0.95] history-text translate-y-[100%]">
+                        <span class="text-brand-yellow block mb-1">A NOSSA</span>
+                        <span class="text-white block">HISTÓRIA.</span>
+                    </h2>
+                </div>
+                <p class="text-lg md:text-2xl text-gray-300 font-body history-p opacity-0 translate-y-8 max-w-xl leading-relaxed">
+                    A Torcida® sempre foi mais do que um snack. Nascida no coração do Brasil, ela é o símbolo das arquibancadas, dos encontros de domingo e da resenha com os amigos. 
+                </p>
+                <p class="text-lg md:text-2xl text-gray-300 font-body history-p opacity-0 translate-y-8 max-w-xl mt-4 leading-relaxed">
+                    Como parte da família PepsiCo, nossa missão continua a mesma: entregar crocância absoluta e intensidade em cada mordida, com a energia autêntica do seu dia a dia.
+                </p>
+                
+                <!-- Badges em linha única contínua sem quebras -->
+                <div class="mt-8 md:mt-12 history-p opacity-0 translate-y-8">
+                     <div class="flex flex-nowrap items-center gap-2 sm:gap-4 overflow-x-auto pb-2">
+                         <span class="px-3.5 sm:px-5 py-1.5 sm:py-2 bg-brand-dark text-white font-display uppercase tracking-wider sm:tracking-widest text-sm sm:text-base md:text-lg clip-diagonal border-l-4 border-brand-red hover:bg-brand-red transition-colors cursor-default whitespace-nowrap">Tradição</span>
+                         <span class="px-3.5 sm:px-5 py-1.5 sm:py-2 bg-brand-dark text-white font-display uppercase tracking-wider sm:tracking-widest text-sm sm:text-base md:text-lg clip-diagonal border-l-4 border-brand-yellow hover:bg-brand-yellow hover:text-brand-dark transition-colors cursor-default whitespace-nowrap">Galera</span>
+                         <span class="px-3.5 sm:px-5 py-1.5 sm:py-2 bg-brand-dark text-white font-display uppercase tracking-wider sm:tracking-widest text-sm sm:text-base md:text-lg clip-diagonal border-l-4 border-brand-green hover:bg-brand-green transition-colors cursor-default whitespace-nowrap">Qualidade</span>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CTA DA GALERA -->
+    <section class="bg-brand-yellow py-20 md:py-32 clip-diagonal text-center z-30 relative" id="cta">
+        <div class="container mx-auto px-6">
+            <div class="overflow-hidden inline-block">
+                <h2 class="text-[8vw] sm:text-[6vw] font-display text-brand-blue uppercase leading-none cta-text translate-y-[110%]">VEM CURTIR O CONTEÚDO</h2>
+            </div><br>
+            <div class="overflow-hidden inline-block mb-8 md:mb-12">
+                <h2 class="text-[8vw] sm:text-[6vw] font-display text-brand-red uppercase leading-none cta-text translate-y-[110%]">MAIS SABOROSO DAS REDES!</h2>
+            </div>
+            <div class="cta-fade opacity-0 translate-y-8 mb-4">
+                <a href="#" class="inline-block bg-brand-dark text-white hover:bg-brand-blue font-display text-xl sm:text-3xl md:text-4xl py-4 sm:py-6 px-6 sm:px-16 clip-button tracking-wide group relative overflow-hidden shadow-2xl transition-all duration-300">
+                    <span class="relative z-10">CADASTRE-SE PARA NOVIDADES</span>
+                    <div class="absolute inset-0 bg-brand-red transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-0"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FOOTER COMPACTO E COMPLETO -->
+    <footer class="bg-brand-blue pt-12 md:pt-24 pb-8 md:pb-12 border-t-4 sm:border-t-8 border-brand-yellow mt-8 sm:mt-12 relative z-20" id="footer">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-white font-body">
+                <div class="col-span-2">
+                    <img src="https://www.br.joypepsico.com/prod/s3fs-public/styles/webp/public/2025-05/tarcida%20logo.png.webp" alt="Torcida" class="h-12 md:h-16 mb-4 md:mb-6">
+                    <p class="text-brand-blue-light max-w-sm mb-6 text-xs sm:text-base">
+                        O salgadinho da galera, com a qualidade da família PepsiCo.
+                    </p>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="https://www.facebook.com/torcidaoficial" target="_blank" rel="noopener noreferrer" aria-label="Facebook Torcida" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-all duration-300 shadow-md">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/torcidaoficial" target="_blank" rel="noopener noreferrer" aria-label="Instagram Torcida" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-all duration-300 shadow-md">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@torcidaoficial" target="_blank" rel="noopener noreferrer" aria-label="TikTok Torcida" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-all duration-300 shadow-md">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.23-1.15 4.38-2.9 5.81-1.78 1.46-4.14 2.1-6.42 1.76-2.28-.35-4.37-1.64-5.64-3.48-1.29-1.87-1.74-4.28-1.23-6.5.5-2.18 1.95-4.08 3.91-5.06 1.96-.98 4.28-1.07 6.31-.26v4.11c-1.25-.56-2.76-.56-3.95.12-1.18.67-1.92 1.98-1.91 3.34.02 1.36.78 2.65 1.98 3.3 1.19.64 2.68.61 3.84.01 1.15-.59 1.89-1.8 1.88-3.11-.02-3.11-.01-6.22-.01-9.33-.01-2.58-.02-5.16-.01-7.74z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-display text-lg sm:text-xl mb-3 sm:mb-6 text-brand-yellow tracking-widest">Navegação</h4>
+                    <ul class="space-y-2 sm:space-y-4 text-brand-blue-light font-medium text-xs sm:text-base">
+                        <li><a href="#hero" class="hover:text-white transition-colors">Início</a></li>
+                        <li><a href="#showcase-top" class="hover:text-white transition-colors">Produtos</a></li>
+                        <li><a href="#historia" class="hover:text-white transition-colors">História</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg sm:text-xl mb-3 sm:mb-6 text-brand-yellow tracking-widest">Legal</h4>
+                    <ul class="space-y-2 sm:space-y-4 text-brand-blue-light font-medium text-xs sm:text-base">
+                        <li><a href="https://contact.pepsico.com/pepsicobr" target="_blank" class="hover:text-white transition-colors">Fale Conosco</a></li>
+                        <li><a href="https://www.pepsico.com.br/pt-br/aviso-de-privacidade" target="_blank" class="hover:text-white transition-colors">Aviso de Privacidade</a></li>
+                        <li><a href="https://www.pepsico.com.br/pt-br/termos-de-uso" target="_blank" class="hover:text-white transition-colors">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 mt-8 md:mt-16 pt-6 md:pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs sm:text-sm text-brand-blue-light font-medium gap-2">
+                <p>&copy; 2026 PepsiCo. Todos os direitos reservados.</p>
+                <p class="font-body">Desenvolvido por <a href="https://instagram.com/mateusemanuelluiznogueira" target="_blank" rel="noopener noreferrer" class="text-brand-yellow hover:text-white font-bold transition-colors">@mateusemanuelluiznogueira</a></p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- GSAP Animations -->
+    <style>
+        /* CSS adicional para o super hover das embalagens */
+        .pack-wrapper {
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .flavor-card:hover .pack-wrapper {
+            transform: translateY(-50px) scale(1.3) rotate(8deg);
+        }
+        .flavor-card:hover .pack-img {
+            filter: drop-shadow(-10px 30px 40px rgba(0,0,0,0.6));
+        }
+
+    </style>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const brandEase = "back.out(1.4)";
+        const fastEase = "power4.out";
+
+        // 1. HERO ANIMATION (Fundo amarelo surge sozinho primeiro, depois elementos entram em cascata)
+        const heroTl = gsap.timeline({ delay: 0.35 });
+        
+        // Linhas SVG animadas
+        heroTl.fromTo(".anim-line", { strokeDasharray: "0, 1000", strokeDashoffset: "0" }, { strokeDasharray: "1000, 0", duration: 1.8, ease: "power2.inOut", stagger: 0.15 }, 0.1);
+        
+        // Cascata de salgadinhos jogados
+        heroTl.fromTo(".hero-mobile-pack", { y: 60, scale: 0.7, opacity: 0 }, { y: 0, scale: 1, opacity: 0.85, duration: 1.2, stagger: 0.15, ease: brandEase }, 0.3)
+              .to("#hero-pack", { opacity: 1, x: 0, y: 0, duration: 1.4, ease: "elastic.out(1, 0.6)" }, 0.45);
+        
+        // Tipografia Cinética e CTAs
+        heroTl.to(".hero-title", { y: "0%", duration: 1.1, stagger: 0.12, ease: brandEase }, 0.6)
+              .to(".hero-sub", { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" }, 0.9);
+
+        gsap.to("#hero-lines", { y: 100, scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true } });
+
+        // Marquee Animation
+        gsap.to("#marquee-text", { xPercent: -50, ease: "none", duration: 20, repeat: -1 });
+
+        // 2A. SHOWCASE TOP 3 (Parallax on Packs)
+        gsap.to(".showcase-title", { y: "0%", duration: 1, stagger: 0.2, ease: fastEase, scrollTrigger: { trigger: "#showcase-top", start: "top 75%" } });
+
+        gsap.utils.toArray('#showcase-top .flavor-card').forEach((card, i) => {
+            const pack = card.querySelector('.pack-wrapper');
+            
+            // Entrada Unificada Card + Embalagem
+            const cardTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+            
+            cardTl.fromTo(card, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" })
+                  .fromTo(pack, { y: 60, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 1, ease: brandEase }, "-=0.5");
+        });
+
+        gsap.to(".parallax-bg", { yPercent: -15, rotation: 1, scrollTrigger: { trigger: "#showcase-top", start: "top bottom", end: "bottom top", scrub: 1 } });
+
+        // 2B. SHOWCASE OTHERS (Grid Secundário)
+        gsap.to(".other-title", { y: "0%", duration: 0.8, stagger: 0.1, ease: fastEase, scrollTrigger: { trigger: "#showcase-others", start: "top 80%" } });
+        
+        gsap.to(".other-card", {
+            y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "back.out(1.2)",
+            scrollTrigger: { trigger: "#showcase-others", start: "top 75%" }
+        });
+
+        // 3. HISTORIA
+        const historyTl = gsap.timeline({ scrollTrigger: { trigger: "#historia", start: "top 65%" } });
+        historyTl.to(".story-visual", { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.7)" })
+                 .to(".history-text", { y: "0%", duration: 0.8, stagger: 0.1, ease: fastEase }, "-=0.6")
+                 .to(".history-p", { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }, "-=0.4");
+
+        // 4. CTA
+        const ctaTl = gsap.timeline({ scrollTrigger: { trigger: "#cta", start: "top 70%" } });
+        ctaTl.to(".cta-text", { y: "0%", duration: 1, stagger: 0.15, ease: brandEase })
+             .to(".cta-fade", { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.5");
+
+    </script>
+</body>
+</html>

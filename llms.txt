@@ -1,0 +1,21 @@
+# Torcida® — Releitura Conceitual & Case de Estudo (Não Oficial)
+
+> Este projeto é uma releitura de design e experiência digital fictícia desenvolvida de forma independente por **Mateus Emanuel Luiz Nogueira** (Creative Developer Solo), sem vínculo institucional direto ou contratação pela PepsiCo Brasil.
+
+## Sobre o Projeto
+- **Nome:** Torcida Web Experience (Concept Redesign)
+- **Autor / Desenvolvedor:** Mateus Emanuel Luiz Nogueira ([@mateusemanuelluiznogueira](https://instagram.com/mateusemanuelluiznogueira))
+- **Objetivo:** Demonstrar excelência em Creative Development, tipografia cinética, microinterações, performance web e design brutalista voltado ao público jovem e fã de snacks no Brasil.
+- **Tecnologias:** HTML5 Semântico, Tailwind CSS, GSAP (GreenSock Animation Platform) 3.12+, ScrollTrigger, WebP Optimization.
+
+## Estrutura do Site
+- **Hero Section:** Tipografia cinética dinâmica com entrada escalonada, paleta amarela e azul PepsiCo, animação fluida do snack Churrasco.
+- **Top 3 Clássicos:** Destaque para os sabores mais icônicos (Pimenta Mexicana, Churrasco Raiz, Cebola Marcante) com cards diagonais e microinterações de hover 3D.
+- **Linha Completa:** Grid secundário com 6 sabores adicionais (Bacon, Queijo, Camarão com Pimenta, Costelinha com Limão, Pão de Alho, Vinagrete).
+- **História & Manifesto:** Narrativa sobre a tradição do salgadinho nos estádios e rolês do Brasil, acompanhada de badges de manifesto (Tradição, Galera, Qualidade).
+- **CTA da Comunidade:** Convite interativo para cadastro de novidades e redes sociais.
+- **Footer:** Links institucionais, navegação rápida, redes oficiais e créditos do desenvolvedor.
+
+## Links Canônicos
+- **Home:** https://torcida.mateusdev.com/
+- **Página 404:** https://torcida.mateusdev.com/404.html

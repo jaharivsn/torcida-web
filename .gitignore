@@ -1,0 +1,14 @@
+﻿# Dependency and OS
+.DS_Store
+Thumbs.db
+node_modules/
+.env*
+!.env.example
+
+# Test outputs and screenshots
+*.png
+*.jpg
+*.jpeg
+*.log
+__pycache__/
+.pytest_cache/

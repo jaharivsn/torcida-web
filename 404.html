@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Esse Pacote Sumiu do Rolê | Torcida® Case Study</title>
+    <meta name="description" content="Página não encontrada no case de estudo Torcida® Redesign por Mateus Emanuel Luiz Nogueira.">
+    <meta name="robots" content="noindex, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-yellow': '#FDE02F',
+                        'brand-blue': '#1A237E',
+                        'brand-blue-light': '#8C9EFF',
+                        'brand-red': '#E53935',
+                        'brand-dark': '#0D0F18',
+                    },
+                    fontFamily: {
+                        display: ['Anton', 'sans-serif'],
+                        body: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 4vw, 100% 100%, 0 calc(100% - 4vw));
+        }
+        .clip-button {
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-white font-body min-h-screen flex flex-col justify-between selection:bg-brand-red selection:text-white">
+    <!-- Header -->
+    <header class="p-6 md:p-12 flex justify-between items-center z-10">
+        <a href="./index.html" class="inline-block transform hover:scale-105 transition-transform">
+            <img src="https://www.br.joypepsico.com/prod/s3fs-public/styles/webp/public/2025-05/tarcida%20logo.png.webp" alt="Torcida" class="h-12 sm:h-16">
+        </a>
+        <span class="text-xs uppercase font-display tracking-widest text-brand-yellow/80 border border-brand-yellow/30 px-3 py-1 rounded-full">
+            Case Conceitual
+        </span>
+    </header>
+
+    <!-- 404 Hero -->
+    <main class="container mx-auto px-6 py-12 flex flex-col items-center text-center z-10 my-auto">
+        <span class="inline-block bg-brand-red text-white font-display text-sm md:text-base px-4 py-1 clip-diagonal mb-6 tracking-widest uppercase shadow-lg">
+            Erro 404 • Pacote Vazio
+        </span>
+        
+        <h1 class="font-display text-[22vw] sm:text-[16vw] md:text-[12vw] leading-none text-brand-yellow uppercase drop-shadow-2xl">
+            404
+        </h1>
+        
+        <h2 class="font-display text-3xl sm:text-5xl uppercase text-white mt-2 max-w-xl">
+            Esse sabor não tá no pacote!
+        </h2>
+        
+        <p class="text-gray-400 font-body text-base sm:text-xl max-w-md mt-4 leading-relaxed">
+            Parece que a página que você tentou acessar saiu da arquibancada ou nunca existiu.
+        </p>
+        
+        <div class="mt-10">
+            <a href="./index.html" class="inline-block bg-brand-yellow text-brand-blue hover:bg-brand-red hover:text-white font-display text-xl sm:text-2xl py-4 px-10 clip-button tracking-wide transition-colors duration-300 shadow-2xl">
+                VOLTAR PARA A RESENHA
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-6 text-center text-xs text-gray-500 font-body border-t border-white/5">
+        <p>Torcida® é uma marca registrada da PepsiCo. Projeto conceitual independente desenvolvido por <a href="https://instagram.com/mateusemanuelluiznogueira" target="_blank" rel="noopener noreferrer" class="text-brand-yellow hover:underline">@mateusemanuelluiznogueira</a>.</p>
+    </footer>
+</body>
+</html>
