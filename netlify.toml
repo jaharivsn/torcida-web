@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+[build.environment]
+  NETLIFY_DRAWER = "false"
+  NETLIFY_ENABLE_DRAWER = "false"
+
+[build.processing]
+  skip_processing = true
+
 [[redirects]]
   from = "/404"
   to = "/404.html"
