@@ -9,6 +9,7 @@ node_modules/
 *.png
 !og-image.png
 *.jpg
+!og-image.jpg
 *.jpeg
 *.log
 __pycache__/
