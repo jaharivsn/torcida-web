@@ -51,7 +51,7 @@ async def run_teste_supremo():
         
         # ASSERT: Meta Tags e Open Graph (Anti-Vibecoding #4, #6, #7, #11, #16)
         title = await page.title()
-        assert "Torcida" in title and "Mateus Emanuel" in title, f"Title genérico detectado: {title}"
+        assert "Torcida" in title and "Mateus Nogueira" in title, f"Title genérico detectado: {title}"
         print(f"  [PASS] [TITLE] Tag <title> descritiva e profissional: '{title}'")
         
         meta_desc = await page.locator("meta[name='description']").get_attribute("content")
