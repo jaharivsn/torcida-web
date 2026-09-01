@@ -87,6 +87,8 @@ async def run_teste_supremo():
         top_heading = page.locator("h2", has_text="OS CLÁSSICOS")
         await expect(top_heading).to_be_visible()
         
+        # ASSERT: Imagens do Top 3 carregadas com sucesso
+        await page.wait_for_timeout(2000)
         top_flavors = ["Pimenta", "Churrasco", "Cebola"]
         for flavor in top_flavors:
             card = page.locator(".flavor-card", has_text=flavor)
