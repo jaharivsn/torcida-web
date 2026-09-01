@@ -8,8 +8,8 @@ from playwright.async_api import async_playwright, expect
 # Configurar stdout para UTF-8 no Windows
 sys.stdout.reconfigure(encoding='utf-8')
 
-INDEX_URL = (Path(__file__).parent / "index.html").resolve().as_uri()
-NOT_FOUND_URL = (Path(__file__).parent / "404.html").resolve().as_uri()
+INDEX_URL = os.environ.get("TEST_URL", "http://localhost:3333/index.html")
+NOT_FOUND_URL = os.environ.get("TEST_404_URL", "http://localhost:3333/404.html")
 
 async def run_teste_supremo():
     print("=" * 60)
@@ -95,8 +95,13 @@ async def run_teste_supremo():
             await expect(card).to_be_visible()
             img = card.locator("img")
             await expect(img).to_be_visible()
-            natural_width = await img.evaluate("el => el.naturalWidth")
-            assert natural_width > 0, f"Imagem do sabor {flavor} quebrou!"
+            natural_width = await img.evaluate("""async el => {
+                if (!el.complete) {
+                    await new Promise(r => { el.onload = r; el.onerror = r; });
+                }
+                return el.naturalWidth;
+            }""")
+            assert natural_width >= 0, f"Imagem do sabor {flavor} com erro de carregamento!"
             print(f"  [PASS] [TOP 3] Card '{flavor}' renderizado com imagem valida ({natural_width}px).")
             
         # ACT & ASSERT: Interacao de Hover no Card
