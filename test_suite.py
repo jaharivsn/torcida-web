@@ -41,7 +41,7 @@ async def run_teste_supremo():
         page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
         
         # ARRANGE: Carregar a Landing Page
-        await page.goto(INDEX_URL)
+        await page.goto(INDEX_URL, wait_until="domcontentloaded")
         
         # ASSERT: Semântica H1 única (Anti-Vibecoding #9 e #10)
         h1_elements = page.locator("h1")
@@ -152,7 +152,7 @@ async def run_teste_supremo():
         # -------------------------------------------------------------
         print("\n[2/3] EXECUTANDO CENARIO MOBILE (390x844)...")
         mobile_page = await browser.new_page(viewport={"width": 390, "height": 844})
-        await mobile_page.goto(INDEX_URL)
+        await mobile_page.goto(INDEX_URL, wait_until="domcontentloaded")
         
         # Verificar se nao ha overflow horizontal quebrado
         scroll_width = await mobile_page.evaluate("document.documentElement.scrollWidth")
@@ -186,7 +186,7 @@ async def run_teste_supremo():
         # -------------------------------------------------------------
         print("\n[3/3] EXECUTANDO TESTE DA PÁGINA 404...")
         page_404 = await browser.new_page(viewport={"width": 1440, "height": 900})
-        await page_404.goto(NOT_FOUND_URL)
+        await page_404.goto(NOT_FOUND_URL, wait_until="domcontentloaded")
         
         title_404 = await page_404.title()
         assert "404" in title_404, f"Título da 404 incorreto: {title_404}"
