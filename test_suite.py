@@ -2,10 +2,14 @@ import asyncio
 import os
 import json
 import sys
+from pathlib import Path
 from playwright.async_api import async_playwright, expect
 
 # Configurar stdout para UTF-8 no Windows
 sys.stdout.reconfigure(encoding='utf-8')
+
+INDEX_URL = (Path(__file__).parent / "index.html").resolve().as_uri()
+NOT_FOUND_URL = (Path(__file__).parent / "404.html").resolve().as_uri()
 
 async def run_teste_supremo():
     print("=" * 60)
@@ -37,7 +41,7 @@ async def run_teste_supremo():
         page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
         
         # ARRANGE: Carregar a Landing Page
-        await page.goto("file:///D:/Creative%20Developer%20Solo/projetos/pessoal/descobrindo/torcida-web/index.html")
+        await page.goto(INDEX_URL)
         
         # ASSERT: Semântica H1 única (Anti-Vibecoding #9 e #10)
         h1_elements = page.locator("h1")
@@ -148,7 +152,7 @@ async def run_teste_supremo():
         # -------------------------------------------------------------
         print("\n[2/3] EXECUTANDO CENARIO MOBILE (390x844)...")
         mobile_page = await browser.new_page(viewport={"width": 390, "height": 844})
-        await mobile_page.goto("file:///D:/Creative%20Developer%20Solo/projetos/pessoal/descobrindo/torcida-web/index.html")
+        await mobile_page.goto(INDEX_URL)
         
         # Verificar se nao ha overflow horizontal quebrado
         scroll_width = await mobile_page.evaluate("document.documentElement.scrollWidth")
@@ -182,7 +186,7 @@ async def run_teste_supremo():
         # -------------------------------------------------------------
         print("\n[3/3] EXECUTANDO TESTE DA PÁGINA 404...")
         page_404 = await browser.new_page(viewport={"width": 1440, "height": 900})
-        await page_404.goto("file:///D:/Creative%20Developer%20Solo/projetos/pessoal/descobrindo/torcida-web/404.html")
+        await page_404.goto(NOT_FOUND_URL)
         
         title_404 = await page_404.title()
         assert "404" in title_404, f"Título da 404 incorreto: {title_404}"
